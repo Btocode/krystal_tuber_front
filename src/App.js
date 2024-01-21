@@ -200,7 +200,7 @@ const App = () => {
           </p>
         </div>
 
-        {!downloadOptions || !downloadInfo.title ? (
+        {!downloadOptions || !downloadInfo?.title ? (
           <div
             className={`wrapper xl:flex lg:flex md:flex sm:justify-center p-10`}
           >
@@ -244,7 +244,7 @@ const App = () => {
             </div>
             <div className="xl:flex lg:flex gap-4 mt-4">
               <img
-                src={downloadInfo.thumbnail_url}
+                src={downloadInfo?.thumbnail_url}
                 alt="thumbnail"
                 className="w-64"
               />
@@ -257,10 +257,10 @@ const App = () => {
                 </span>
 
                 <span className="font-bold">Author:</span>
-                <span className="truncate">{downloadInfo.author}</span>
+                <span className="truncate">{downloadInfo?.author}</span>
 
                 <span className="font-bold">Duration:</span>
-                <span className="truncate">{downloadInfo.length} seconds</span>
+                <span className="truncate">{downloadInfo?.length} seconds</span>
               </div>
               <div className="bg-gray-800 w-1 xl:block lg:block md:block hidden"></div>
               <div className="flex space-x-4 mt-4 flex-1 ">
