@@ -155,7 +155,7 @@ const App = () => {
 
   return (
     <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-      <div className="container flex flex-col items-center xl:min-h-screen lg:min-h-screen md:min-h-screen bg-gray-100 relative ">
+      <div className="container flex flex-col items-center xl:min-h-screen lg:min-h-screen md:min-h-screen bg-gray-100 relative gap-10">
         <div className="w-full sticky top-0 h-16 bg-gray-100 z-10">
           <img
             src="https://i.ibb.co/FW5MnYg/krm1.png"
@@ -190,7 +190,7 @@ const App = () => {
           </div>
         </div>
 
-        <div className="p-10 rounded-xl xl:mt-36 lg:mt-36 mt-24">
+        <div className="p-10 rounded-xl xl:mt-36 lg:mt-36 mt-16">
           <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-4">
             Free Online YouTube Audio & Video Downloader
           </h1>
@@ -267,77 +267,79 @@ const App = () => {
                 <div className="video-formats">
                   <span className="font-bold">Video: </span>
                   <div className="flex flex-wrap">
-                    {downloadOptions?.video?.map((format) => (
+                    {downloadOptions?.video?.map((format) =>
                       loading && selectedFormat === format ? (
                         <div className="multi-button-3">
-                          <button className="paste animate-bounce">Downloaing...</button>
+                          <button className="paste animate-bounce">
+                            Downloaing...
+                          </button>
                         </div>
                       ) : (
-                      <div className="multi-button-3">
-                        <button
-                          onClick={() => {
-                            setSelectedFormat(format);
-                            handleDownload(format)
+                        <div className="multi-button-3">
+                          <button
+                            onClick={() => {
+                              setSelectedFormat(format);
+                              handleDownload(format);
                             }}
-                          className="paste"
-                        >
-                          {format}
-                        </button>
-                      </div>
+                            className="paste"
+                          >
+                            {format}
+                          </button>
+                        </div>
                       )
-                    ))}
+                    )}
                   </div>
                 </div>
                 <div className="audio-formats">
                   <span className="font-bold">Audio: </span>
                   <div className="flex flex-wrap">
-                    {downloadOptions?.audio?.map((format) => (
+                    {downloadOptions?.audio?.map((format) =>
                       loading && selectedFormat === format ? (
                         <div className="multi-button-3">
-                          <button className="paste animate-bounce">Downloaing...</button>
+                          <button className="paste animate-bounce">
+                            Downloaing...
+                          </button>
                         </div>
                       ) : (
-                      <div className="multi-button-3">
-                        <button
-                          onClick={() => {
-                            setSelectedFormat(format);
-                            handleDownload(format)
+                        <div className="multi-button-3">
+                          <button
+                            onClick={() => {
+                              setSelectedFormat(format);
+                              handleDownload(format);
                             }}
-                          className="paste"
-                        >
-                          {format}
-                        </button>
-                      </div>
+                            className="paste"
+                          >
+                            {format}
+                          </button>
+                        </div>
                       )
-                    ))}
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         )}
-
-
-        {/* Thanks for using our tools  */}
-        <div className="absolute bottom-0 w-full text-center py-4">
-          <p>
-            Special thanks to{" "}
-            <span role="img" aria-label="heart">
-              ❤️
-            </span>{" "}
-            <a
-              href
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              SI Bhavna Verma
-            </a>
-          </p>
-        </div>
-
-        <Toaster />
       </div>
+      {/* Thanks for using our tools  */}
+      <div className="w-full text-center p-4">
+        <p>
+          Special thanks to{" "}
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>{" "}
+          <a
+            href
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            SI Bhavna Verma
+          </a>
+        </p>
+      </div>
+
+      <Toaster />
     </main>
   );
 };
