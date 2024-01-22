@@ -322,7 +322,7 @@ const App = () => {
         )}
       </div>
       {/* Thanks for using our tools  */}
-      <div className="w-full text-center p-4">
+      {/* <div className="w-full text-center p-4">
         <p>
           Special thanks to{" "}
           <span role="img" aria-label="heart">
@@ -337,7 +337,7 @@ const App = () => {
             SI Bhavna Verma
           </a>
         </p>
-      </div>
+      </div> */}
 
       <Toaster />
     </main>
