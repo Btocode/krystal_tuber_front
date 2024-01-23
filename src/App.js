@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { FaAndroid, FaBackward, FaPaste, FaSpinner } from 'react-icons/fa';
-import { IoIosDownload } from 'react-icons/io';
-import Draggable from 'react-draggable';
+import React, { useEffect, useState } from 'react';
+import { FaAndroid } from 'react-icons/fa';
 import classNames from "classnames";
 import toast, { Toaster } from "react-hot-toast";
 import { MdOutlineClose } from "react-icons/md";
@@ -40,11 +38,27 @@ const notify = (title, description) =>
 
 
 const App = () => {
-  const [videoUrl, setVideoUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState("");
   const [downloadOptions, setDownloadOptions] = useState([]);
   const [downloadInfo, setDownloadInfo] = useState({});
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState(null);
+  const [country, setCountry] = useState(null);
+
+  useEffect(() => {
+    if(country === null){
+      fetch("https://audiotuber.vercel.app/get_location")
+        .then((response) => response.json())
+        .then((data) => {
+          const country = data.country;
+          setCountry(country);
+          console.log("User country:", country);
+        })
+        .catch((error) => {
+          console.error("Error fetching location:", error);
+        });
+    }
+  }, []); 
 
   const fetchOptions = async () => {
     setDownloadOptions(null);
@@ -58,13 +72,16 @@ const App = () => {
     }
     setLoading(true);
     try {
-      const response = await fetch('https://audiotuber.vercel.app/suggest_formats', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url: videoUrl }),
-      });
+      const response = await fetch(
+        "https://audiotuber.vercel.app/suggest_formats",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: videoUrl }),
+        }
+      );
 
       if (!response.ok) {
         setLoading(false);
@@ -87,10 +104,10 @@ const App = () => {
     try {
       setLoading(true);
 
-      const response = await fetch('https://audiotuber.vercel.app/download', {
-        method: 'POST',
+      const response = await fetch("https://audiotuber.vercel.app/download", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ url: videoUrl, quality }),
       });
@@ -100,17 +117,19 @@ const App = () => {
       }
 
       // Parse the filename from the 'Content-Disposition' header
-      const contentDispositionHeader = response.headers.get('Content-Disposition');
+      const contentDispositionHeader = response.headers.get(
+        "Content-Disposition"
+      );
       console.log(contentDispositionHeader);
       const filename = contentDispositionHeader
         ? contentDispositionHeader.match(/filename="(.+)"/)[1]
-        : 'krystalDownloader_' + Date.now();
+        : "krystalDownloader_" + Date.now();
 
       // Create a Blob from the response data
       const blob = await response.blob();
 
       // Create a link element to trigger the download
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = window.URL.createObjectURL(blob);
       link.download = filename;
 
@@ -135,23 +154,20 @@ const App = () => {
   const validateUrl = (url) => {
     const pattern = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
     return pattern.test(url);
-  }
+  };
 
   const handlePaste = () => {
-    navigator.clipboard.readText().then(text => {
+    navigator.clipboard.readText().then((text) => {
       if (validateUrl(text)) {
         setVideoUrl(text);
-      }
-      else {
+      } else {
         notify(
           "Invalid URL",
           "Please make sure you have copied a valid YouTube video URL."
         );
       }
     });
-  }
-
-
+  };
 
   return (
     <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
@@ -322,7 +338,8 @@ const App = () => {
         )}
       </div>
       {/* Thanks for using our tools  */}
-      {/* <div className="w-full text-center p-4">
+      
+      <div className={`w-full text-center p-4 ${!country?.includes("IN") && "hidden"}`}>
         <p>
           Special thanks to{" "}
           <span role="img" aria-label="heart">
@@ -337,7 +354,7 @@ const App = () => {
             SI Bhavna Verma
           </a>
         </p>
-      </div> */}
+      </div>
 
       <Toaster />
     </main>
