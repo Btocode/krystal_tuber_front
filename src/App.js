@@ -287,7 +287,7 @@ const App = () => {
                       loading && selectedFormat === format ? (
                         <div className="multi-button-3">
                           <button className="paste animate-bounce">
-                            Downloaing...
+                            Downloading...
                           </button>
                         </div>
                       ) : (
@@ -313,7 +313,7 @@ const App = () => {
                       loading && selectedFormat === format ? (
                         <div className="multi-button-3">
                           <button className="paste animate-bounce">
-                            Downloaing...
+                            Downloading...
                           </button>
                         </div>
                       ) : (
